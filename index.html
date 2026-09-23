@@ -574,7 +574,7 @@ footer{
 }
 
 
-/* ===== V5 SETTINGS / LANGUAGE / CURRENCY ===== */
+/* ===== V7 SETTINGS + WORLD LANGUAGES ===== */
 .header-actions{display:flex;align-items:center;gap:10px}
 .settings-btn{
   min-height:44px;padding:0 15px;border-radius:14px;border:1px solid rgba(220,177,147,.45);
@@ -588,7 +588,7 @@ footer{
 }
 .settings-overlay.open{display:grid}
 .settings-panel{
-  width:min(560px,100%);position:relative;padding:30px;border-radius:30px;
+  width:min(590px,100%);position:relative;padding:30px;border-radius:30px;
   background:linear-gradient(180deg,#fffefa,#fff5ec);
   border:1px solid rgba(255,255,255,.9);
   box-shadow:0 36px 100px rgba(73,44,30,.24)
@@ -599,27 +599,32 @@ footer{
 }
 .settings-panel h2{margin:0 0 8px;font-size:30px}
 .settings-sub{margin:0 0 24px;color:var(--muted);line-height:1.55}
-.settings-row{display:grid;grid-template-columns:1fr 1.25fr;gap:18px;align-items:center;padding:15px 0;border-top:1px solid rgba(181,126,94,.12)}
+.settings-row{display:grid;grid-template-columns:1fr 1.35fr;gap:18px;align-items:center;padding:15px 0;border-top:1px solid rgba(181,126,94,.12)}
 .settings-row label{font-weight:900}
 .settings-row small{display:block;margin-top:4px;color:var(--muted);font-weight:600}
 .settings-select{
   width:100%;height:46px;border-radius:14px;border:1px solid #e7cdb9;background:#fff;
   color:#4b332b;padding:0 12px;font:inherit;font-weight:800;outline:none
 }
+.translate-box{
+  min-height:46px;display:flex;align-items:center;padding:5px 10px;border-radius:14px;
+  border:1px solid #e7cdb9;background:#fff
+}
+#google_translate_element{width:100%}
+#google_translate_element .goog-te-gadget{font-family:Arial,Helvetica,sans-serif!important;color:#68483a!important;font-weight:700!important}
+#google_translate_element select.goog-te-combo{
+  width:100%;min-height:36px;border:0;background:#fff;color:#4b332b;font:inherit;font-weight:800;outline:none
+}
 .settings-detect{
   margin-top:18px;padding:13px 15px;border-radius:16px;background:#fff1e4;color:#79513f;
   font-size:13px;line-height:1.5
 }
 .currency-note{font-size:11px;color:#9b7d6f;margin-top:8px}
-.price{transition:transform .18s ease,background .18s ease}
+.price{transition:transform .18s ease}
 .price.currency-updated{animation:pricePop .28s ease}
 @keyframes pricePop{50%{transform:scale(1.08)}}
-@media(max-width:960px){
-  .header-actions .settings-btn{display:none}
-}
-@media(max-width:620px){
-  .settings-row{grid-template-columns:1fr;gap:9px}
-}
+@media(max-width:960px){.header-actions .settings-btn{display:none}}
+@media(max-width:620px){.settings-row{grid-template-columns:1fr;gap:9px}}
 
 </style>
 </head>
@@ -721,25 +726,25 @@ footer{
 <div class="settings-overlay" id="settingsOverlay" aria-hidden="true">
   <div class="settings-panel">
     <button class="settings-close" id="settingsClose" aria-label="Закрыть">×</button>
-    <h2 id="settingsTitle">⚙ Настройки</h2>
-    <p class="settings-sub" id="settingsSubtitle">Выбери язык и валюту сайта. Настройки сохранятся на этом устройстве.</p>
+    <h2>⚙ Настройки</h2>
+    <p class="settings-sub">
+      Выбери язык и валюту. Язык переводит весь сайт целиком — включая имена питомцев, описания, FAQ и кнопки.
+    </p>
 
     <div class="settings-row">
       <div>
-        <label for="languageSelect" id="languageLabel">🌍 Язык</label>
-        <small id="languageHint">Интерфейс сайта изменится сразу</small>
+        <label>🌍 Язык сайта</label>
+        <small>Все языки, доступные в Google Translate</small>
       </div>
-      <select class="settings-select" id="languageSelect">
-        <option value="ru">Русский</option>
-        <option value="en">English</option>
-        <option value="de">Deutsch</option>
-      </select>
+      <div class="translate-box">
+        <div id="google_translate_element"></div>
+      </div>
     </div>
 
     <div class="settings-row">
       <div>
-        <label for="currencySelect" id="currencyLabel">💳 Валюта</label>
-        <small id="currencyHint">Можно определить автоматически</small>
+        <label for="currencySelect">💳 Валюта</label>
+        <small>Можно определить автоматически по региону браузера</small>
       </div>
       <select class="settings-select" id="currencySelect">
         <option value="AUTO">Авто — по региону браузера</option>
@@ -751,14 +756,25 @@ footer{
         <option value="UAH">UAH — ₴</option>
         <option value="PLN">PLN — zł</option>
         <option value="CZK">CZK — Kč</option>
+        <option value="JPY">JPY — ¥</option>
+        <option value="CNY">CNY — ¥</option>
+        <option value="KRW">KRW — ₩</option>
+        <option value="INR">INR — ₹</option>
+        <option value="TRY">TRY — ₺</option>
+        <option value="BRL">BRL — R$</option>
+        <option value="CAD">CAD — C$</option>
+        <option value="AUD">AUD — A$</option>
+        <option value="SEK">SEK — kr</option>
+        <option value="NOK">NOK — kr</option>
+        <option value="DKK">DKK — kr</option>
       </select>
     </div>
 
     <div class="settings-detect" id="regionStatus">
       Регион определяется по языку и часовому поясу браузера. Точное местоположение сайту не требуется.
     </div>
-    <div class="currency-note" id="currencyNote">
-      Цены пересчитываются из базовой цены в евро. При доступе к интернету курс обновляется автоматически.
+    <div class="currency-note">
+      Перевод требует интернет-соединения. Цены пересчитываются из базовой цены в евро.
     </div>
   </div>
 </div>
@@ -796,235 +812,12 @@ document.querySelectorAll("nav a").forEach(a=>a.onclick=()=>document.getElementB
 document.getElementById("downloadBtn").onclick=e=>{e.preventDefault();alert("Здесь позже будет ссылка на GitHub Release с Girlandia.")};
 document.getElementById("year").textContent=new Date().getFullYear();
 
-/* ===== V5 SETTINGS LOGIC ===== */
+/* ===== V7 WORLD LANGUAGE + CURRENCY LOGIC ===== */
 const settingsBtn=document.getElementById("settingsBtn");
 const settingsOverlay=document.getElementById("settingsOverlay");
 const settingsClose=document.getElementById("settingsClose");
-const languageSelect=document.getElementById("languageSelect");
 const currencySelect=document.getElementById("currencySelect");
 const regionStatus=document.getElementById("regionStatus");
-const currencyNote=document.getElementById("currencyNote");
-
-const uiTranslations={
-  en:{
-    "Питомцы":"Pets","Возможности":"Features","Скачать":"Download",
-    "💛 Твой маленький мир на рабочем столе":"💛 Your little world on the desktop",
-    "Питомец, который":"A pet that","живёт рядом с тобой.":"lives right beside you.",
-    "Girlandia — яркий и уютный мир живых питомцев: они гуляют по экрану, разговаривают, играют, спят, растут и становятся по-настоящему разными.":"Girlandia is a bright, cozy world of living desktop pets. They walk around, talk, play, sleep, grow and develop their own personalities.",
-    "Скачать бесплатно ↓":"Download free ↓","Познакомиться с питомцами":"Meet the pets",
-    "уникальных питомцев":"unique pets","уровней малыша":"baby levels","милых моментов":"cute moments",
-    "Настоящий домик Милы":"Mila's real home","🏠 Домик Милы • Girlandia":"🏠 Mila's home • Girlandia",
-    "🐾 Найди своего любимца":"🐾 Find your favorite",
-    "Шесть питомцев. Шесть маленьких миров.":"Six pets. Six little worlds.",
-    "Каждый питомец отличается не только внешностью, но и характером, мини-играми, репликами и личной системой прогресса.":"Every pet has a different personality, mini-games, dialogue and its own progression system.",
-    "Бесплатно":"Free","Уютная капибара":"Cozy capybara","Маленький исследователь":"Little explorer",
-    "Весёлый сладкоежка":"Cheerful sweet tooth","Спокойный садовник":"Calm gardener",
-    "Специалист по хаосу":"Chaos specialist","Энергичная ученица":"Energetic learner",
-    "Подробнее":"Learn more",
-    "✨ Не просто картинка":"✨ More than a picture",
-    "Питомец становится частью твоего дня.":"A pet becomes part of your day.",
-    "Общение":"Conversations","Память":"Memory","Мини-игры":"Mini-games","Домик":"Home","Уровни":"Levels","Коллекция":"Collection",
-    "Разговоры, реакции и новые реплики по мере дружбы.":"Conversations, reactions and new dialogue as your friendship grows.",
-    "Питомец запоминает важные факты и делает общение личнее.":"Your pet remembers important details and makes conversations more personal.",
-    "Сад, кухня, трюки, поиск сокровищ и проделки.":"Gardening, cooking, tricks, treasure hunts and mischief.",
-    "Кормление, сон, рюкзак, магазин, музыка и отдых.":"Feeding, sleep, backpack, shop, music and rest.",
-    "Подарки, предметы, новые анимации и события.":"Gifts, items, new animations and events.",
-    "Собирай питомцев и открывай совместные сцены.":"Collect pets and unlock scenes they share together.",
-    "💛 Начни бесплатно":"💛 Start free",
-    "Посели маленького друга на своём рабочем столе.":"Bring a little friend to your desktop.",
-    "Первая версия Girlandia создаётся для Windows. Мила будет бесплатным питомцем, а остальные откроют свои уникальные функции и мини-игры.":"Girlandia starts on Windows. Mila is free, while other pets unlock their own unique features and mini-games.",
-    "Скачать Girlandia для Windows":"Download Girlandia for Windows",
-    "❓ FAQ":"❓ FAQ","Частые вопросы":"Frequently asked questions",
-    "Girlandia бесплатная?":"Is Girlandia free?","У питомцев разные функции?":"Do pets have different features?","Будет версия для телефона?":"Will there be a mobile version?",
-    "Да. Мила будет доступна бесплатно. Остальные питомцы можно будет приобрести отдельно.":"Yes. Mila will be free. Other pets can be purchased separately.",
-    "Да. У каждого свой характер, уникальная механика, мини-игра и реплики.":"Yes. Each pet has its own personality, special mechanic, mini-game and dialogue.",
-    "Сначала проект сосредоточен на Windows. Мобильная версия может появиться позже.":"The project starts on Windows. A mobile version may come later.",
-    "Яркий и уютный мир питомцев, который всегда рядом.":"A bright, cozy world of pets that is always nearby."
-  },
-  de:{
-    "Питомцы":"Haustiere","Возможности":"Funktionen","Скачать":"Download",
-    "💛 Твой маленький мир на рабочем столе":"💛 Deine kleine Welt auf dem Desktop",
-    "Питомец, который":"Ein Haustier, das","живёт рядом с тобой.":"direkt bei dir lebt.",
-    "Girlandia — яркий и уютный мир живых питомцев: они гуляют по экрану, разговаривают, играют, спят, растут и становятся по-настоящему разными.":"Girlandia ist eine bunte, gemütliche Welt lebendiger Desktop-Haustiere. Sie laufen herum, reden, spielen, schlafen, wachsen und entwickeln ihren eigenen Charakter.",
-    "Скачать бесплатно ↓":"Kostenlos herunterladen ↓","Познакомиться с питомцами":"Haustiere kennenlernen",
-    "уникальных питомцев":"einzigartige Haustiere","уровней малыша":"Baby-Level","милых моментов":"süße Momente",
-    "Настоящий домик Милы":"Milas echtes Zuhause","🏠 Домик Милы • Girlandia":"🏠 Milas Zuhause • Girlandia",
-    "🐾 Найди своего любимца":"🐾 Finde deinen Liebling",
-    "Шесть питомцев. Шесть маленьких миров.":"Sechs Haustiere. Sechs kleine Welten.",
-    "Каждый питомец отличается не только внешностью, но и характером, мини-играми, репликами и личной системой прогресса.":"Jedes Haustier hat einen eigenen Charakter, Minispiele, Dialoge und ein eigenes Fortschrittssystem.",
-    "Бесплатно":"Kostenlos","Уютная капибара":"Gemütliches Capybara","Маленький исследователь":"Kleiner Entdecker",
-    "Весёлый сладкоежка":"Fröhliche Naschkatze","Спокойный садовник":"Ruhiger Gärtner",
-    "Специалист по хаосу":"Chaos-Spezialist","Энергичная ученица":"Energiegeladene Schülerin",
-    "Подробнее":"Mehr erfahren",
-    "✨ Не просто картинка":"✨ Mehr als nur ein Bild",
-    "Питомец становится частью твоего дня.":"Dein Haustier wird Teil deines Tages.",
-    "Общение":"Gespräche","Память":"Erinnerungen","Мини-игры":"Minispiele","Домик":"Zuhause","Уровни":"Level","Коллекция":"Sammlung",
-    "Разговоры, реакции и новые реплики по мере дружбы.":"Gespräche, Reaktionen und neue Sätze, während eure Freundschaft wächst.",
-    "Питомец запоминает важные факты и делает общение личнее.":"Dein Haustier merkt sich wichtige Dinge und macht Gespräche persönlicher.",
-    "Сад, кухня, трюки, поиск сокровищ и проделки.":"Garten, Küche, Tricks, Schatzsuche und Streiche.",
-    "Кормление, сон, рюкзак, магазин, музыка и отдых.":"Füttern, Schlafen, Rucksack, Shop, Musik und Erholung.",
-    "Подарки, предметы, новые анимации и события.":"Geschenke, Gegenstände, neue Animationen und Ereignisse.",
-    "Собирай питомцев и открывай совместные сцены.":"Sammle Haustiere und schalte gemeinsame Szenen frei.",
-    "💛 Начни бесплатно":"💛 Kostenlos starten",
-    "Посели маленького друга на своём рабочем столе.":"Hol dir einen kleinen Freund auf deinen Desktop.",
-    "Первая версия Girlandia создаётся для Windows. Мила будет бесплатным питомцем, а остальные откроют свои уникальные функции и мини-игры.":"Girlandia startet auf Windows. Mila ist kostenlos, weitere Haustiere bringen eigene Funktionen und Minispiele.",
-    "Скачать Girlandia для Windows":"Girlandia für Windows herunterladen",
-    "Частые вопросы":"Häufige Fragen",
-    "Girlandia бесплатная?":"Ist Girlandia kostenlos?","У питомцев разные функции?":"Haben Haustiere unterschiedliche Funktionen?","Будет версия для телефона?":"Wird es eine Handy-Version geben?",
-    "Да. Мила будет доступна бесплатно. Остальные питомцы можно будет приобрести отдельно.":"Ja. Mila ist kostenlos. Weitere Haustiere können separat gekauft werden.",
-    "Да. У каждого свой характер, уникальная механика, мини-игра и реплики.":"Ja. Jedes Haustier hat einen eigenen Charakter, eine besondere Mechanik, ein Minispiel und eigene Dialoge.",
-    "Сначала проект сосредоточен на Windows. Мобильная версия может появиться позже.":"Zuerst konzentriert sich das Projekt auf Windows. Eine mobile Version kann später folgen.",
-    "Яркий и уютный мир питомцев, который всегда рядом.":"Eine bunte, gemütliche Haustierwelt, die immer bei dir ist."
-  }
-};
-
-const settingsText={
-  ru:{
-    title:"⚙ Настройки",sub:"Выбери язык и валюту сайта. Настройки сохранятся на этом устройстве.",
-    lang:"🌍 Язык",langHint:"Интерфейс сайта изменится сразу",
-    currency:"💳 Валюта",currencyHint:"Можно определить автоматически",
-    auto:"Авто — по региону браузера",
-    region:(r,c)=>`Определён регион: ${r}. Валюта: ${c}. Точное местоположение сайту не требуется.`,
-    note:"Цены пересчитываются из базовой цены в евро. При доступе к интернету курс обновляется автоматически."
-  },
-  en:{
-    title:"⚙ Settings",sub:"Choose the website language and currency. Your settings are saved on this device.",
-    lang:"🌍 Language",langHint:"The website updates immediately",
-    currency:"💳 Currency",currencyHint:"It can be detected automatically",
-    auto:"Auto — browser region",
-    region:(r,c)=>`Detected region: ${r}. Currency: ${c}. The site does not need your exact location.`,
-    note:"Prices are converted from the base EUR price. Exchange rates update online when available."
-  },
-  de:{
-    title:"⚙ Einstellungen",sub:"Wähle Sprache und Währung. Deine Einstellungen werden auf diesem Gerät gespeichert.",
-    lang:"🌍 Sprache",langHint:"Die Website wird sofort umgestellt",
-    currency:"💳 Währung",currencyHint:"Kann automatisch erkannt werden",
-    auto:"Auto — Browser-Region",
-    region:(r,c)=>`Erkannte Region: ${r}. Währung: ${c}. Die Website braucht deinen genauen Standort nicht.`,
-    note:"Preise werden vom EUR-Grundpreis umgerechnet. Wechselkurse werden online aktualisiert, wenn verfügbar."
-  }
-};
-
-const originalTextNodes=[];
-(function collectOriginalTextNodes(){
-  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-  while(walker.nextNode()){
-    const n=walker.currentNode;
-    const trimmed=n.nodeValue.trim();
-    if(trimmed) originalTextNodes.push({node:n,original:n.nodeValue,trimmed});
-  }
-})();
-
-function applyLanguage(lang){
-  const dict=uiTranslations[lang]||{};
-  originalTextNodes.forEach(item=>{
-    const leading=item.original.match(/^\s*/)?.[0]||"";
-    const trailing=item.original.match(/\s*$/)?.[0]||"";
-    item.node.nodeValue=leading+(dict[item.trimmed]||item.trimmed)+trailing;
-  });
-
-  const st=settingsText[lang]||settingsText.ru;
-  document.getElementById("settingsTitle").textContent=st.title;
-  document.getElementById("settingsSubtitle").textContent=st.sub;
-  document.getElementById("languageLabel").textContent=st.lang;
-  document.getElementById("languageHint").textContent=st.langHint;
-  document.getElementById("currencyLabel").textContent=st.currency;
-  document.getElementById("currencyHint").textContent=st.currencyHint;
-  currencySelect.options[0].textContent=st.auto;
-  currencyNote.textContent=st.note;
-  document.documentElement.lang=lang;
-  localStorage.setItem("girlandia_language",lang);
-  refreshRegionStatus();
-  updateFreeLabels();
-}
-
-const countryCurrency={
-  AT:"EUR",DE:"EUR",FR:"EUR",IT:"EUR",ES:"EUR",PT:"EUR",NL:"EUR",BE:"EUR",IE:"EUR",FI:"EUR",GR:"EUR",
-  US:"USD",GB:"GBP",CH:"CHF",RU:"RUB",UA:"UAH",PL:"PLN",CZ:"CZK"
-};
-const timezoneCountry={
-  "Europe/Vienna":"AT","Europe/Berlin":"DE","Europe/Zurich":"CH","Europe/London":"GB",
-  "Europe/Warsaw":"PL","Europe/Prague":"CZ","Europe/Kyiv":"UA","Europe/Moscow":"RU",
-  "America/New_York":"US","America/Chicago":"US","America/Denver":"US","America/Los_Angeles":"US"
-};
-function detectRegion(){
-  let locale=(navigator.languages&&navigator.languages[0])||navigator.language||"en";
-  let region="";
-  try{region=new Intl.Locale(locale).region||""}catch(e){}
-  let tz="";
-  try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||""}catch(e){}
-  if(!region && timezoneCountry[tz]) region=timezoneCountry[tz];
-  if(region==="DE" && tz==="Europe/Vienna") region="AT";
-  const currency=countryCurrency[region]||"EUR";
-  return {locale,region:region||"—",timezone:tz||"—",currency};
-}
-
-function currentCurrency(){
-  const selected=currencySelect.value;
-  return selected==="AUTO"?detectRegion().currency:selected;
-}
-
-const currencyFallbackRates={
-  EUR:1,USD:1.18,GBP:0.87,CHF:0.94,RUB:98,UAH:49,PLN:4.25,CZK:24.4
-};
-let liveRates={...currencyFallbackRates};
-
-async function loadRates(){
-  try{
-    const response=await fetch("https://open.er-api.com/v6/latest/EUR",{cache:"no-store"});
-    if(!response.ok) throw new Error("rate fetch failed");
-    const json=await response.json();
-    if(json && json.rates) liveRates={...liveRates,...json.rates,EUR:1};
-  }catch(e){
-    console.log("[Girlandia] Using built-in fallback currency rates.");
-  }
-  updatePrices();
-}
-
-function currencyFormat(value,currency,lang){
-  const locales={ru:"ru-RU",en:"en-US",de:"de-DE"};
-  let max=2;
-  if(["RUB","UAH","CZK"].includes(currency) && value>=20) max=0;
-  try{
-    return new Intl.NumberFormat(locales[lang]||"ru-RU",{style:"currency",currency,maximumFractionDigits:max}).format(value);
-  }catch(e){
-    return `${value.toFixed(2)} ${currency}`;
-  }
-}
-
-const paidPriceEls=[...document.querySelectorAll(".price")].filter(el=>/€\s*\d|\d.*€/.test(el.textContent));
-paidPriceEls.forEach(el=>{
-  const match=el.textContent.replace(",",".").match(/([0-9]+(?:\.[0-9]+)?)/);
-  if(match) el.dataset.eur=match[1];
-});
-
-function updateFreeLabels(){
-  const lang=languageSelect.value;
-  document.querySelectorAll(".price.free").forEach(el=>{
-    el.textContent=lang==="en"?"Free":lang==="de"?"Kostenlos":"Бесплатно";
-  });
-}
-function updatePrices(){
-  const lang=languageSelect.value;
-  const currency=currentCurrency();
-  const rate=liveRates[currency]||currencyFallbackRates[currency]||1;
-  paidPriceEls.forEach(el=>{
-    const eur=parseFloat(el.dataset.eur||"0");
-    el.textContent=currencyFormat(eur*rate,currency,lang);
-    el.classList.remove("currency-updated");
-    void el.offsetWidth;
-    el.classList.add("currency-updated");
-  });
-  localStorage.setItem("girlandia_currency",currencySelect.value);
-  refreshRegionStatus();
-}
-function refreshRegionStatus(){
-  const lang=languageSelect.value||"ru";
-  const st=settingsText[lang]||settingsText.ru;
-  const d=detectRegion();
-  const regionLabel=d.region==="—"?"—":d.region;
-  regionStatus.textContent=st.region(regionLabel,currentCurrency());
-}
 
 function openSettings(){
   settingsOverlay.classList.add("open");
@@ -1039,21 +832,125 @@ settingsClose?.addEventListener("click",closeSettings);
 settingsOverlay?.addEventListener("click",e=>{if(e.target===settingsOverlay)closeSettings()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSettings()});
 
-languageSelect.addEventListener("change",()=>{
-  applyLanguage(languageSelect.value);
-  updatePrices();
-});
-currencySelect.addEventListener("change",updatePrices);
+const countryCurrency={
+  AT:"EUR",DE:"EUR",FR:"EUR",IT:"EUR",ES:"EUR",PT:"EUR",NL:"EUR",BE:"EUR",IE:"EUR",FI:"EUR",GR:"EUR",
+  US:"USD",GB:"GBP",CH:"CHF",RU:"RUB",UA:"UAH",PL:"PLN",CZ:"CZK",JP:"JPY",CN:"CNY",KR:"KRW",
+  IN:"INR",TR:"TRY",BR:"BRL",CA:"CAD",AU:"AUD",SE:"SEK",NO:"NOK",DK:"DKK"
+};
+const timezoneCountry={
+  "Europe/Vienna":"AT","Europe/Berlin":"DE","Europe/Zurich":"CH","Europe/London":"GB",
+  "Europe/Warsaw":"PL","Europe/Prague":"CZ","Europe/Kyiv":"UA","Europe/Moscow":"RU",
+  "Asia/Tokyo":"JP","Asia/Shanghai":"CN","Asia/Seoul":"KR","Asia/Kolkata":"IN","Europe/Istanbul":"TR",
+  "America/Sao_Paulo":"BR","America/Toronto":"CA","Australia/Sydney":"AU","Europe/Stockholm":"SE",
+  "Europe/Oslo":"NO","Europe/Copenhagen":"DK",
+  "America/New_York":"US","America/Chicago":"US","America/Denver":"US","America/Los_Angeles":"US"
+};
+function detectRegion(){
+  let locale=(navigator.languages&&navigator.languages[0])||navigator.language||"en";
+  let region="";
+  try{region=new Intl.Locale(locale).region||""}catch(e){}
+  let tz="";
+  try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||""}catch(e){}
+  if(!region && timezoneCountry[tz]) region=timezoneCountry[tz];
+  if(region==="DE" && tz==="Europe/Vienna") region="AT";
+  return {locale,region:region||"—",timezone:tz||"—",currency:countryCurrency[region]||"EUR"};
+}
+function currentCurrency(){
+  return currencySelect.value==="AUTO"?detectRegion().currency:currencySelect.value;
+}
 
-const savedLang=localStorage.getItem("girlandia_language");
-const browserLang=((navigator.language||"ru").slice(0,2));
-languageSelect.value=["ru","en","de"].includes(savedLang)?savedLang:(["ru","en","de"].includes(browserLang)?browserLang:"en");
-const savedCurrency=localStorage.getItem("girlandia_currency")||"AUTO";
-currencySelect.value=[...currencySelect.options].some(o=>o.value===savedCurrency)?savedCurrency:"AUTO";
-applyLanguage(languageSelect.value);
+const fallbackRates={
+  EUR:1,USD:1.18,GBP:0.87,CHF:0.94,RUB:98,UAH:49,PLN:4.25,CZK:24.4,
+  JPY:174,CNY:8.4,KRW:1640,INR:104,TRY:49,BRL:6.3,CAD:1.62,AUD:1.78,SEK:10.9,NOK:11.7,DKK:7.46
+};
+let liveRates={...fallbackRates};
+
+const paidPriceEls=[...document.querySelectorAll(".price")].filter(el=>/€\s*\d|\d.*€/.test(el.textContent));
+paidPriceEls.forEach(el=>{
+  const m=el.textContent.replace(",",".").match(/([0-9]+(?:\.[0-9]+)?)/);
+  if(m) el.dataset.eur=m[1];
+});
+
+function priceLocale(){
+  return (navigator.languages&&navigator.languages[0])||navigator.language||"en-US";
+}
+function formatMoney(value,currency){
+  let max=2;
+  if(["RUB","UAH","CZK","JPY","KRW","INR"].includes(currency) && value>=20) max=0;
+  try{
+    return new Intl.NumberFormat(priceLocale(),{style:"currency",currency,maximumFractionDigits:max}).format(value);
+  }catch(e){
+    return value.toFixed(2)+" "+currency;
+  }
+}
+function updatePrices(){
+  const currency=currentCurrency();
+  const rate=liveRates[currency]||fallbackRates[currency]||1;
+  paidPriceEls.forEach(el=>{
+    const eur=parseFloat(el.dataset.eur||"0");
+    el.textContent=formatMoney(eur*rate,currency);
+    el.classList.remove("currency-updated"); void el.offsetWidth; el.classList.add("currency-updated");
+  });
+  localStorage.setItem("girlandia_currency",currencySelect.value);
+  refreshRegionStatus();
+}
+function refreshRegionStatus(){
+  const d=detectRegion();
+  regionStatus.textContent=`Определён регион: ${d.region}. Валюта: ${currentCurrency()}. Точное местоположение сайту не требуется.`;
+}
+async function loadRates(){
+  try{
+    const r=await fetch("https://open.er-api.com/v6/latest/EUR",{cache:"no-store"});
+    if(!r.ok) throw new Error("rates");
+    const j=await r.json();
+    if(j&&j.rates) liveRates={...liveRates,...j.rates,EUR:1};
+  }catch(e){
+    console.log("[Girlandia] Currency fallback rates are being used.");
+  }
+  updatePrices();
+}
+currencySelect.value=localStorage.getItem("girlandia_currency")||"AUTO";
+currencySelect.addEventListener("change",updatePrices);
 updatePrices();
 loadRates();
 
+window.googleTranslateElementInit=function(){
+  try{
+    new google.translate.TranslateElement(
+      {pageLanguage:"ru",autoDisplay:false,multilanguagePage:true},
+      "google_translate_element"
+    );
+
+    const saved=localStorage.getItem("girlandia_google_lang");
+    const browser=((navigator.languages&&navigator.languages[0])||navigator.language||"ru").split("-")[0].toLowerCase();
+
+    const attach=()=>{
+      const combo=document.querySelector("#google_translate_element select.goog-te-combo");
+      if(!combo) return false;
+      combo.addEventListener("change",()=>{
+        localStorage.setItem("girlandia_google_lang",combo.value||"ru");
+      });
+      const target=saved || browser;
+      if(target && target!=="ru" && [...combo.options].some(o=>o.value===target)){
+        combo.value=target;
+        combo.dispatchEvent(new Event("change"));
+      }
+      return true;
+    };
+
+    if(!attach()){
+      let tries=0;
+      const timer=setInterval(()=>{
+        tries++;
+        if(attach()||tries>30) clearInterval(timer);
+      },250);
+    }
+  }catch(e){
+    console.log("[Girlandia] Translator unavailable:",e);
+  }
+};
+
 </script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
