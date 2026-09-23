@@ -675,6 +675,70 @@ body.translated-rtl{
   top:0!important;
 }
 
+
+/* ===== V10 PET HELLO BUBBLES — ABOVE PET ===== */
+.pet-card{
+  position:relative;
+  overflow:visible!important;
+}
+.pet-photo,
+.pet-card h3{
+  cursor:pointer;
+}
+.pet-bubble{
+  position:absolute;
+  left:28px;
+  top:-22px;
+  min-width:112px;
+  max-width:210px;
+  padding:10px 14px;
+  border-radius:18px 18px 18px 8px;
+  background:linear-gradient(180deg,#fffefb 0%,#fff3e8 100%);
+  color:#5b3b31;
+  border:1px solid rgba(220,177,147,.58);
+  box-shadow:0 18px 34px rgba(89,55,40,.16);
+  font-weight:800;
+  font-size:14px;
+  line-height:1.35;
+  text-align:center;
+  opacity:0;
+  transform:translateY(8px) scale(.95);
+  transform-origin:28px 100%;
+  pointer-events:none;
+  transition:opacity .22s ease, transform .22s ease;
+  z-index:20;
+}
+.pet-bubble.show{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+.pet-bubble::after{
+  content:"";
+  position:absolute;
+  left:42px;
+  bottom:-9px;
+  width:16px;
+  height:16px;
+  background:linear-gradient(135deg,#fff6ec 0%,#ffefe0 100%);
+  border-right:1px solid rgba(220,177,147,.58);
+  border-bottom:1px solid rgba(220,177,147,.58);
+  transform:rotate(45deg);
+}
+.pet-card:nth-child(2) .pet-bubble,
+.pet-card:nth-child(3) .pet-bubble,
+.pet-card:nth-child(5) .pet-bubble,
+.pet-card:nth-child(6) .pet-bubble{
+  left:28px;
+}
+@media(max-width:620px){
+  .pet-bubble{
+    left:24px;
+    top:-18px;
+    font-size:13px;
+    max-width:190px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1119,6 +1183,73 @@ const googleChromeObserver=new MutationObserver(()=>{
   }
 });
 googleChromeObserver.observe(document.documentElement,{childList:true,subtree:true});
+
+
+/* ===== V10 PET HELLO BUBBLES LOGIC ===== */
+const bubblePhrases = {
+  ru: [
+    "Привет! 💛",
+    "Привет, я здесь!",
+    "Рада тебя видеть! ✨",
+    "Давай дружить! 🐾"
+  ],
+  en: [
+    "Hello! 💛",
+    "Hi, I'm here!",
+    "So happy to see you! ✨",
+    "Let's be friends! 🐾"
+  ],
+  de: [
+    "Hallo! 💛",
+    "Hi, ich bin hier!",
+    "Schön dich zu sehen! ✨",
+    "Lass uns Freunde sein! 🐾"
+  ]
+};
+
+function currentBubbleLang(){
+  const select = document.getElementById("nativeLanguageSelect");
+  const val = (select && select.value ? select.value : "ru").toLowerCase();
+  if (val.startsWith("de")) return "de";
+  if (val.startsWith("en")) return "en";
+  if (val.startsWith("ru")) return "ru";
+  return "ru";
+}
+
+function showPetBubble(card){
+  const bubble = card.querySelector(".pet-bubble");
+  if(!bubble) return;
+  const phrases = bubblePhrases[currentBubbleLang()] || bubblePhrases.ru;
+  const text = phrases[Math.floor(Math.random() * phrases.length)];
+  bubble.textContent = text;
+  bubble.classList.add("show");
+  clearTimeout(card._bubbleTimer);
+  card._bubbleTimer = setTimeout(() => {
+    bubble.classList.remove("show");
+  }, 2200);
+}
+
+document.querySelectorAll(".pet-card").forEach((card) => {
+  const photo = card.querySelector(".pet-photo");
+  const title = card.querySelector("h3");
+  const descButton = card.querySelector(".small-btn");
+
+  [photo, title].forEach((el) => {
+    if(!el) return;
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      showPetBubble(card);
+    });
+  });
+
+  card.addEventListener("click", (e) => {
+    if (descButton && descButton.contains(e.target)) return;
+    if (photo && photo.contains(e.target)) return;
+    if (title && title.contains(e.target)) return;
+    showPetBubble(card);
+  });
+});
 
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
