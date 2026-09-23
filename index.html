@@ -626,6 +626,55 @@ footer{
 @media(max-width:960px){.header-actions .settings-btn{display:none}}
 @media(max-width:620px){.settings-row{grid-template-columns:1fr;gap:9px}}
 
+
+/* ===== V8 CLEAN LANGUAGE SELECTOR ===== */
+#google_translate_element{
+  position:absolute!important;
+  left:-99999px!important;
+  top:-99999px!important;
+  width:1px!important;
+  height:1px!important;
+  overflow:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+#nativeLanguageSelect{
+  width:100%;
+  height:44px;
+  border:0;
+  background:#fff;
+  color:#4b332b;
+  font:inherit;
+  font-weight:800;
+  outline:none;
+  cursor:pointer;
+}
+
+/* Hide every known Google Translate brand/banner variant. */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+.goog-logo-link,
+.goog-te-gadget > span,
+.goog-te-gadget img,
+.VIpgJd-ZVi9od-ORHb,
+.VIpgJd-ZVi9od-ORHb-OEVmcd,
+.VIpgJd-ZVi9od-l4eHX-hSRGPd,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+.VIpgJd-ZVi9od-vH1Gmf,
+.skiptranslate iframe{
+  display:none!important;
+  visibility:hidden!important;
+}
+html,body{
+  top:0!important;
+  margin-top:0!important;
+}
+body.translated-ltr,
+body.translated-rtl{
+  top:0!important;
+}
+
 </style>
 </head>
 <body>
@@ -737,7 +786,10 @@ footer{
         <small>Все языки, доступные в Google Translate</small>
       </div>
       <div class="translate-box">
-        <div id="google_translate_element"></div>
+        <select class="settings-select" id="nativeLanguageSelect">
+          <option value="">Загрузка языков…</option>
+        </select>
+        <div id="google_translate_element" aria-hidden="true"></div>
       </div>
     </div>
 
@@ -914,41 +966,159 @@ currencySelect.addEventListener("change",updatePrices);
 updatePrices();
 loadRates();
 
+const nativeLanguageSelect=document.getElementById("nativeLanguageSelect");
+
+/* Native language names.
+   Intl.DisplayNames is used first, so English appears as "English",
+   German as "Deutsch", French as "français", Japanese as "日本語", etc. */
+const languageNativeFallback={
+  af:"Afrikaans",sq:"Shqip",am:"አማርኛ",ar:"العربية",hy:"Հայերեն",as:"অসমীয়া",
+  ay:"Aymar aru",az:"Azərbaycanca",bm:"Bamanankan",eu:"Euskara",be:"Беларуская",
+  bn:"বাংলা",bho:"भोजपुरी",bs:"Bosanski",bg:"Български",ca:"Català",ceb:"Cebuano",
+  ny:"Chichewa",zh:"中文","zh-CN":"简体中文","zh-TW":"繁體中文",co:"Corsu",hr:"Hrvatski",
+  cs:"Čeština",da:"Dansk",dv:"ދިވެހި",doi:"डोगरी",nl:"Nederlands",en:"English",
+  eo:"Esperanto",et:"Eesti",ee:"Eʋegbe",tl:"Filipino",fi:"Suomi",fr:"Français",
+  fy:"Frysk",gl:"Galego",ka:"ქართული",de:"Deutsch",el:"Ελληνικά",gn:"Avañe'ẽ",
+  gu:"ગુજરાતી",ht:"Kreyòl ayisyen",ha:"Hausa",haw:"ʻŌlelo Hawaiʻi",iw:"עברית",he:"עברית",
+  hi:"हिन्दी",hmn:"Hmoob",hu:"Magyar",is:"Íslenska",ig:"Igbo",ilo:"Ilocano",
+  id:"Bahasa Indonesia",ga:"Gaeilge",it:"Italiano",ja:"日本語",jw:"Basa Jawa",
+  jv:"Basa Jawa",kn:"ಕನ್ನಡ",kk:"Қазақша",km:"ខ្មែរ",rw:"Kinyarwanda",gom:"कोंकणी",
+  ko:"한국어",kri:"Krio",ku:"Kurdî",ckb:"کوردی",ky:"Кыргызча",lo:"ລາວ",la:"Latina",
+  lv:"Latviešu",ln:"Lingála",lt:"Lietuvių",lg:"Luganda",lb:"Lëtzebuergesch",
+  mk:"Македонски",mai:"मैथिली",mg:"Malagasy",ms:"Bahasa Melayu",ml:"മലയാളം",
+  mt:"Malti",mi:"Māori",mr:"मराठी",lus:"Mizo ṭawng",mn:"Монгол",my:"မြန်မာ",
+  ne:"नेपाली",no:"Norsk",or:"ଓଡ଼ିଆ",om:"Afaan Oromoo",ps:"پښتو",fa:"فارسی",
+  pl:"Polski",pt:"Português",pa:"ਪੰਜਾਬੀ",qu:"Runasimi",ro:"Română",ru:"Русский",
+  sm:"Gagana Sāmoa",sa:"संस्कृतम्",gd:"Gàidhlig",nso:"Sepedi",sr:"Српски",
+  st:"Sesotho",sn:"ChiShona",sd:"سنڌي",si:"සිංහල",sk:"Slovenčina",sl:"Slovenščina",
+  so:"Soomaali",es:"Español",su:"Basa Sunda",sw:"Kiswahili",sv:"Svenska",
+  tg:"Тоҷикӣ",ta:"தமிழ்",tt:"Татарча",te:"తెలుగు",th:"ไทย",ti:"ትግርኛ",
+  ts:"Tsonga",tr:"Türkçe",tk:"Türkmençe",ak:"Twi",uk:"Українська",ur:"اردو",
+  ug:"ئۇيغۇرچە",uz:"Oʻzbekcha",vi:"Tiếng Việt",cy:"Cymraeg",xh:"isiXhosa",
+  yi:"ייִדיש",yo:"Yorùbá",zu:"isiZulu"
+};
+
+function nativeLanguageName(code, fallback){
+  const normalized=(code||"").trim();
+  if(!normalized) return fallback||"";
+  const intlCode=normalized==="iw"?"he":normalized;
+  try{
+    const dn=new Intl.DisplayNames([intlCode],{type:"language"});
+    const name=dn.of(intlCode);
+    if(name && name.toLowerCase()!==intlCode.toLowerCase()) return name;
+  }catch(e){}
+  return languageNativeFallback[normalized] || languageNativeFallback[intlCode] || fallback || normalized;
+}
+
+function hideGoogleTranslateChrome(){
+  document.documentElement.style.top="0px";
+  document.body.style.top="0px";
+
+  const selectors=[
+    ".goog-te-banner-frame",
+    "iframe.goog-te-banner-frame",
+    ".VIpgJd-ZVi9od-ORHb",
+    ".VIpgJd-ZVi9od-ORHb-OEVmcd",
+    ".VIpgJd-ZVi9od-l4eHX-hSRGPd"
+  ];
+  selectors.forEach(sel=>{
+    document.querySelectorAll(sel).forEach(el=>{
+      el.style.setProperty("display","none","important");
+      el.style.setProperty("visibility","hidden","important");
+    });
+  });
+}
+
+function fillNativeLanguageSelector(googleCombo){
+  if(!googleCombo || !nativeLanguageSelect) return;
+
+  const previous=localStorage.getItem("girlandia_google_lang") || "";
+  nativeLanguageSelect.innerHTML="";
+
+  [...googleCombo.options].forEach(opt=>{
+    const item=document.createElement("option");
+    item.value=opt.value;
+    if(!opt.value){
+      item.textContent="Выбрать язык";
+    }else{
+      item.textContent=nativeLanguageName(opt.value,opt.textContent);
+    }
+    nativeLanguageSelect.appendChild(item);
+  });
+
+  if(previous && [...nativeLanguageSelect.options].some(o=>o.value===previous)){
+    nativeLanguageSelect.value=previous;
+  }else{
+    nativeLanguageSelect.value=googleCombo.value||"";
+  }
+
+  nativeLanguageSelect.onchange=()=>{
+    const code=nativeLanguageSelect.value;
+    localStorage.setItem("girlandia_google_lang",code||"ru");
+    googleCombo.value=code;
+    googleCombo.dispatchEvent(new Event("change",{bubbles:true}));
+
+    setTimeout(hideGoogleTranslateChrome,20);
+    setTimeout(hideGoogleTranslateChrome,150);
+    setTimeout(hideGoogleTranslateChrome,600);
+  };
+}
+
 window.googleTranslateElementInit=function(){
   try{
     new google.translate.TranslateElement(
-      {pageLanguage:"ru",autoDisplay:false,multilanguagePage:true},
+      {
+        pageLanguage:"ru",
+        autoDisplay:false,
+        multilanguagePage:true
+      },
       "google_translate_element"
     );
 
-    const saved=localStorage.getItem("girlandia_google_lang");
-    const browser=((navigator.languages&&navigator.languages[0])||navigator.language||"ru").split("-")[0].toLowerCase();
-
-    const attach=()=>{
+    let attempts=0;
+    const timer=setInterval(()=>{
+      attempts++;
       const combo=document.querySelector("#google_translate_element select.goog-te-combo");
-      if(!combo) return false;
-      combo.addEventListener("change",()=>{
-        localStorage.setItem("girlandia_google_lang",combo.value||"ru");
-      });
-      const target=saved || browser;
-      if(target && target!=="ru" && [...combo.options].some(o=>o.value===target)){
-        combo.value=target;
-        combo.dispatchEvent(new Event("change"));
-      }
-      return true;
-    };
+      if(combo){
+        clearInterval(timer);
+        fillNativeLanguageSelector(combo);
 
-    if(!attach()){
-      let tries=0;
-      const timer=setInterval(()=>{
-        tries++;
-        if(attach()||tries>30) clearInterval(timer);
-      },250);
-    }
+        const saved=localStorage.getItem("girlandia_google_lang");
+        const browser=((navigator.languages&&navigator.languages[0])||navigator.language||"ru")
+          .split("-")[0].toLowerCase();
+
+        const target=saved || browser;
+        if(target && target!=="ru" && [...combo.options].some(o=>o.value===target)){
+          combo.value=target;
+          nativeLanguageSelect.value=target;
+          combo.dispatchEvent(new Event("change",{bubbles:true}));
+        }
+
+        hideGoogleTranslateChrome();
+      }
+      if(attempts>40){
+        clearInterval(timer);
+        if(nativeLanguageSelect){
+          nativeLanguageSelect.innerHTML='<option value="">Переводчик недоступен</option>';
+        }
+      }
+    },200);
   }catch(e){
     console.log("[Girlandia] Translator unavailable:",e);
   }
 };
+
+/* Google may insert the translation toolbar after the page changes.
+   Keep removing it so the site stays clean. */
+const googleChromeObserver=new MutationObserver(()=>{
+  hideGoogleTranslateChrome();
+
+  const combo=document.querySelector("#google_translate_element select.goog-te-combo");
+  if(combo && nativeLanguageSelect && nativeLanguageSelect.options.length<=1){
+    fillNativeLanguageSelector(combo);
+  }
+});
+googleChromeObserver.observe(document.documentElement,{childList:true,subtree:true});
 
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
