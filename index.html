@@ -250,6 +250,329 @@ footer{
   .pet-photo{width:110px;height:110px}
 }
 
+
+/* ===== V4 PREMIUM / GLOSSY POLISH ===== */
+:root{
+  --bg:#fffaf7;
+  --card:#fffdfb;
+  --text:#35231d;
+  --muted:#7d675e;
+  --accent:#f07f5a;
+  --accent-strong:#d75d3d;
+  --champagne:#ffd98c;
+  --peach:#ffb38d;
+  --rose:#ffcab8;
+  --line:rgba(173,109,77,.16);
+  --glass:rgba(255,255,255,.72);
+  --premium-shadow:0 30px 80px rgba(105,63,42,.16);
+}
+
+body{
+  background:
+    radial-gradient(circle at 10% 8%, rgba(255,181,147,.42) 0, transparent 25%),
+    radial-gradient(circle at 90% 12%, rgba(255,221,137,.46) 0, transparent 27%),
+    radial-gradient(circle at 70% 65%, rgba(255,194,180,.22) 0, transparent 24%),
+    linear-gradient(180deg,#fffaf7 0%,#fff6ef 45%,#fffaf7 100%);
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+  background:
+    linear-gradient(115deg, rgba(255,255,255,.26), transparent 32%),
+    radial-gradient(circle at 50% -10%, rgba(255,255,255,.7), transparent 35%);
+}
+
+header{
+  background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,248,243,.76));
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 16px 42px rgba(105,67,49,.10), inset 0 1px 0 rgba(255,255,255,.8);
+}
+
+.logo-badge{
+  background:
+    linear-gradient(145deg,#ffb07e 0%,#ef7b55 45%,#ce5d3d 100%);
+  box-shadow:
+    0 10px 28px rgba(217,99,61,.28),
+    inset 0 1px 0 rgba(255,255,255,.55);
+  border:1px solid rgba(255,255,255,.45);
+}
+
+.eyebrow{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,236,220,.92));
+  border:1px solid rgba(238,170,124,.22);
+  box-shadow:
+    0 10px 26px rgba(176,107,68,.10),
+    inset 0 1px 0 rgba(255,255,255,.8);
+}
+
+.hero{
+  position:relative;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  width:170px;height:170px;
+  left:-70px;top:90px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,205,157,.25),transparent 70%);
+  filter:blur(5px);
+  pointer-events:none;
+}
+
+.hero h1{
+  text-shadow:0 2px 0 rgba(255,255,255,.85);
+}
+
+.grad{
+  background:linear-gradient(90deg,#d55f3d 0%,#ef865c 40%,#f4b95f 72%,#dd7148 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+}
+
+.btn{
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.45);
+}
+
+.btn::after{
+  content:"";
+  position:absolute;
+  top:-80%;
+  left:-45%;
+  width:38%;
+  height:260%;
+  transform:rotate(20deg);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.48),transparent);
+  transition:left .55s ease;
+}
+
+.btn:hover::after{
+  left:120%;
+}
+
+.btn-primary{
+  background:
+    linear-gradient(135deg,#f68f65 0%,#e76d49 52%,#c95235 100%);
+  box-shadow:
+    0 18px 34px rgba(204,85,51,.28),
+    inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+.btn-light{
+  background:linear-gradient(180deg,#ffffff,#fff8f2);
+  box-shadow:0 12px 24px rgba(107,70,49,.08);
+}
+
+.stats .stat{
+  padding:10px 14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.48);
+  border:1px solid rgba(255,255,255,.66);
+  backdrop-filter:blur(8px);
+}
+
+.hero-card{
+  position:relative;
+  background:
+    linear-gradient(180deg,#fffefd 0%,#fff5eb 100%);
+  border:1px solid rgba(255,255,255,.92);
+  box-shadow:
+    0 38px 95px rgba(97,59,40,.18),
+    inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+.hero-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:30px;
+  pointer-events:none;
+  background:
+    linear-gradient(125deg,rgba(255,255,255,.32),transparent 22%,transparent 72%,rgba(255,255,255,.12));
+}
+
+.hero-card-top{
+  background:
+    linear-gradient(180deg,#fffdf9,#fff1e4);
+  border-bottom:1px solid rgba(199,133,93,.13);
+}
+
+.hero-image-wrap::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),transparent 30%,rgba(94,50,30,.06));
+}
+
+.hero-image-badge{
+  background:rgba(255,252,248,.88);
+  border:1px solid rgba(255,255,255,.88);
+  box-shadow:
+    0 15px 35px rgba(75,44,29,.14),
+    inset 0 1px 0 rgba(255,255,255,.85);
+}
+
+.soft{
+  position:relative;
+  background:
+    radial-gradient(circle at 20% 0%,rgba(255,228,210,.44),transparent 26%),
+    linear-gradient(180deg,rgba(255,247,240,.94),rgba(255,252,248,.58));
+}
+
+.pet-card{
+  overflow:hidden;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.97),rgba(255,247,239,.96));
+  border:1px solid rgba(230,190,163,.5);
+  box-shadow:
+    0 20px 52px rgba(92,57,39,.09),
+    inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+.pet-card::before{
+  content:"";
+  position:absolute;
+  width:120px;height:120px;
+  right:-40px;bottom:-45px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,202,151,.22),transparent 68%);
+}
+
+.pet-card:hover{
+  transform:translateY(-8px) scale(1.01);
+  box-shadow:
+    0 30px 68px rgba(92,57,39,.14),
+    inset 0 1px 0 rgba(255,255,255,.92);
+}
+
+.pet-photo{
+  border:1px solid rgba(255,255,255,.92);
+  box-shadow:
+    0 16px 34px rgba(97,60,40,.11),
+    inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+.price{
+  border:1px solid rgba(255,255,255,.75);
+  box-shadow:0 8px 20px rgba(129,78,48,.08);
+}
+
+.special{
+  background:
+    linear-gradient(135deg,#fff9f4 0%,#ffeadd 100%);
+  border:1px solid rgba(236,190,158,.48);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+}
+
+.small-btn{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,#5a3a30,#382721);
+  box-shadow:0 12px 25px rgba(65,43,36,.18);
+  border:1px solid rgba(255,255,255,.10);
+}
+
+.feature{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,249,244,.94));
+  border:1px solid rgba(232,197,174,.5);
+  box-shadow:
+    0 18px 44px rgba(92,59,42,.07),
+    inset 0 1px 0 rgba(255,255,255,.9);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+
+.feature:hover{
+  transform:translateY(-5px);
+  box-shadow:0 24px 52px rgba(92,59,42,.11);
+}
+
+.icon{
+  background:
+    linear-gradient(145deg,#fff7ec,#ffd9b9);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:
+    0 12px 24px rgba(215,148,100,.16),
+    inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+.download{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 83% 18%,rgba(255,244,185,.42) 0,transparent 22%),
+    radial-gradient(circle at 10% 100%,rgba(255,199,157,.28) 0,transparent 22%),
+    linear-gradient(135deg,#a95539 0%,#dd7049 42%,#f0985c 66%,#f5c66e 100%);
+  box-shadow:
+    0 34px 90px rgba(158,79,51,.30),
+    inset 0 1px 0 rgba(255,255,255,.20);
+}
+
+.download::before{
+  content:"";
+  position:absolute;
+  width:260px;height:260px;
+  right:-85px;top:-95px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:
+    0 0 0 32px rgba(255,255,255,.035),
+    0 0 0 68px rgba(255,255,255,.025);
+}
+
+.download::after{
+  content:"✦  ✧  ✦";
+  position:absolute;
+  right:42px;
+  bottom:30px;
+  font-size:34px;
+  letter-spacing:16px;
+  color:rgba(255,255,255,.32);
+}
+
+.faq details{
+  background:
+    linear-gradient(180deg,#ffffff,#fff9f4);
+  border:1px solid rgba(229,196,173,.56);
+  box-shadow:
+    0 12px 28px rgba(93,59,42,.055),
+    inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+.modal{
+  background:
+    linear-gradient(180deg,#fffdf9 0%,#fff6ed 100%);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:
+    0 36px 90px rgba(76,46,32,.22),
+    inset 0 1px 0 rgba(255,255,255,.92);
+}
+
+.modal-pet-photo{
+  background:linear-gradient(145deg,#fff9f2,#f9e1cc);
+  box-shadow:
+    0 18px 38px rgba(95,59,40,.12),
+    inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+footer{
+  background:
+    linear-gradient(180deg,rgba(255,251,247,0),rgba(255,241,230,.92));
+}
+
+@media(max-width:620px){
+  .stats .stat{padding:8px 10px}
+  .hero-card{transform:none}
+}
+
 </style>
 </head>
 <body>
@@ -267,7 +590,7 @@ footer{
     <div>
       <span class="eyebrow">💛 Твой маленький мир на рабочем столе</span>
       <h1>Питомец, который <span class="grad">живёт рядом с тобой.</span></h1>
-      <p class="lead">Girlandia — уютное приложение с живыми питомцами: они гуляют по экрану, разговаривают, играют, спят, растут и становятся по-настоящему разными.</p>
+      <p class="lead">Girlandia — яркий и уютный мир живых питомцев: они гуляют по экрану, разговаривают, играют, спят, растут и становятся по-настоящему разными.</p>
       <div class="actions">
         <a class="btn btn-primary" href="#download">Скачать бесплатно ↓</a>
         <a class="btn btn-light" href="#pets">Познакомиться с питомцами</a>
@@ -294,7 +617,7 @@ footer{
     <div class="wrap">
       <div class="title">
         <span class="eyebrow">🐾 Найди своего любимца</span>
-        <h2>Шесть питомцев. Шесть характеров.</h2>
+        <h2>Шесть питомцев. Шесть маленьких миров.</h2>
         <p>Каждый питомец отличается не только внешностью, но и характером, мини-играми, репликами и личной системой прогресса.</p>
       </div>
 
@@ -311,7 +634,7 @@ footer{
 
   <section id="features">
     <div class="wrap">
-      <div class="title"><span class="eyebrow">✨ Не просто картинка</span><h2>Питомец реагирует на тебя каждый день.</h2></div>
+      <div class="title"><span class="eyebrow">✨ Не просто картинка</span><h2>Питомец становится частью твоего дня.</h2></div>
       <div class="features">
         <div class="feature"><div class="icon">💬</div><h3>Общение</h3><p>Разговоры, реакции и новые реплики по мере дружбы.</p></div>
         <div class="feature"><div class="icon">🧠</div><h3>Память</h3><p>Питомец запоминает важные факты и делает общение личнее.</p></div>
