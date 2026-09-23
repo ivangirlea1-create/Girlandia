@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f6efe5">
-<title>Girlandia — мир питомцев</title>
+<title>Girlandia — яркий мир питомцев</title>
 <meta name="description" content="Girlandia — уютный мир интерактивных питомцев на рабочем столе.">
 <style>
 :root{
@@ -136,6 +136,120 @@ footer{padding:44px 0 56px;border-top:1px solid var(--line);text-align:center;co
   background:#fff2e4;
 }
 
+
+/* ===== V3 brighter polish ===== */
+:root{
+  --bg:#fffaf4;
+  --card:#fffdf9;
+  --text:#3e2a23;
+  --muted:#7f675d;
+  --accent:#ef7d57;
+  --accent2:#ffca68;
+  --line:#efdac8;
+  --shadow:0 26px 70px rgba(115,72,49,.14);
+}
+body{
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255,190,163,.55) 0, transparent 26%),
+    radial-gradient(circle at 92% 12%, rgba(255,225,135,.48) 0, transparent 28%),
+    radial-gradient(circle at 50% 75%, rgba(255,206,184,.25) 0, transparent 24%),
+    linear-gradient(180deg, #fffaf4 0%, #fff5ec 44%, #fff9f3 100%);
+}
+header{
+  background:rgba(255,255,255,.88);
+  box-shadow:0 16px 40px rgba(103,65,45,.10);
+}
+.logo-badge{
+  background:linear-gradient(135deg,#ff9867,#e96e4d 60%,#cf5d41);
+  box-shadow:0 10px 26px rgba(224,108,69,.30);
+}
+.btn{transition:transform .18s ease, box-shadow .18s ease, filter .18s ease}
+.btn:hover,.small-btn:hover{transform:translateY(-2px);filter:saturate(1.04)}
+.btn-primary{
+  background:linear-gradient(135deg,#f48a5e,#df6946 55%,#cb5738);
+  box-shadow:0 16px 30px rgba(214,105,70,.28);
+}
+.btn-light{
+  background:rgba(255,255,255,.92);
+  box-shadow:0 10px 22px rgba(106,69,48,.08);
+}
+.eyebrow{
+  background:linear-gradient(135deg,#fff2e2,#ffe7cc);
+  color:#ac5d34;
+  box-shadow:0 8px 18px rgba(220,155,98,.14);
+}
+.hero h1{letter-spacing:-.045em}
+.hero-card{
+  background:linear-gradient(180deg,#fffdfa,#fff5ea);
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 30px 90px rgba(97,61,42,.16);
+}
+.hero-card-top{
+  background:linear-gradient(180deg,#fffaf2,#fff2e6);
+  color:#6a4333;
+}
+.hero-image-wrap{background:linear-gradient(180deg,#fffaf2,#ffedd9)}
+.hero-image-badge{
+  background:rgba(255,251,246,.94);
+  border:1px solid rgba(219,165,118,.25);
+}
+.soft{
+  background:linear-gradient(180deg, rgba(255,245,236,.92), rgba(255,251,246,.55));
+}
+.title h2{color:#432c24}
+.pet-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,248,240,.96));
+  border:1px solid #f3dfcf;
+  box-shadow:0 18px 44px rgba(94,59,42,.08);
+}
+.pet-card:hover{box-shadow:0 26px 54px rgba(94,59,42,.12)}
+.price{
+  background:linear-gradient(135deg,#fff0e1,#ffe0c6);
+  color:#9b5b3f;
+}
+.price.free{
+  background:linear-gradient(135deg,#eef9e5,#dff0cd);
+  color:#678b4b;
+}
+.pet-photo{
+  background:linear-gradient(145deg,#fffaf2,#f8e2ce);
+  width:120px;
+  height:120px;
+}
+.special{
+  background:linear-gradient(135deg,#fff6ee,#fdebdc);
+  border:1px solid rgba(233,195,164,.35);
+}
+.small-btn{
+  background:linear-gradient(135deg,#52382f,#3f2d27);
+  box-shadow:0 10px 22px rgba(69,48,40,.16);
+}
+.feature{
+  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,248,241,.92));
+  box-shadow:0 14px 38px rgba(96,62,44,.06);
+}
+.icon{
+  background:linear-gradient(135deg,#fff2e1,#ffdcbf);
+  box-shadow:0 10px 20px rgba(226,166,114,.14);
+}
+.download{
+  background:
+    radial-gradient(circle at 85% 24%, rgba(255,238,170,.35) 0, transparent 24%),
+    radial-gradient(circle at 15% 90%, rgba(255,191,143,.22) 0, transparent 20%),
+    linear-gradient(135deg,#ba6546 0%, #eb8355 45%, #ffc864 100%);
+  box-shadow:0 28px 78px rgba(176,91,58,.26);
+}
+.faq details{
+  background:linear-gradient(180deg,#ffffff,#fff9f4);
+  box-shadow:0 10px 26px rgba(97,62,44,.05);
+}
+footer{
+  background:linear-gradient(180deg, rgba(255,250,244,0), rgba(255,245,236,.9));
+}
+@media(max-width:620px){
+  .pet-photo{width:110px;height:110px}
+}
+
 </style>
 </head>
 <body>
@@ -230,7 +344,7 @@ footer{padding:44px 0 56px;border-top:1px solid var(--line);text-align:center;co
   </section>
 </main>
 
-<footer><div class="wrap"><div class="logo" style="justify-content:center"><span class="logo-badge">G</span><span>Girlandia</span></div><p>Маленький мир питомцев, который всегда рядом.</p><small>© <span id="year"></span> Girlandia</small></div></footer>
+<footer><div class="wrap"><div class="logo" style="justify-content:center"><span class="logo-badge">G</span><span>Girlandia</span></div><p>Яркий и уютный мир питомцев, который всегда рядом.</p><small>© <span id="year"></span> Girlandia</small></div></footer>
 
 <div class="modal-bg" id="modalBg">
   <div class="modal">
