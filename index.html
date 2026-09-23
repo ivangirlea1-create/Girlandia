@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f6efe5">
+<title>Girlandia — мир питомцев</title>
+<meta name="description" content="Girlandia — уютный мир интерактивных питомцев на рабочем столе.">
+<style>
+:root{
+  --bg:#fbf7f1;--card:#fffaf5;--text:#3e2c25;--muted:#806a61;
+  --accent:#d9754d;--accent2:#efb45d;--line:#ead8c7;--shadow:0 22px 60px rgba(82,53,38,.12)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{
+  margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);
+  background:
+    radial-gradient(circle at 20% 10%,#f8d9c5 0,transparent 28%),
+    radial-gradient(circle at 85% 18%,#f8e6b8 0,transparent 28%),
+    var(--bg)
+}
+a{text-decoration:none;color:inherit}.wrap{width:min(1180px,calc(100% - 32px));margin:auto}
+header{
+  position:sticky;top:12px;z-index:10;margin:14px auto 0;width:min(1180px,calc(100% - 24px));
+  height:70px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,.82);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.8);
+  border-radius:22px;box-shadow:0 10px 34px rgba(70,46,33,.08)
+}
+.logo{display:flex;align-items:center;gap:10px;font-size:24px;font-weight:900}
+.logo-badge{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#fff;
+  background:linear-gradient(135deg,var(--accent),#bb5d3d);box-shadow:0 8px 20px rgba(199,96,58,.25)}
+nav{display:flex;gap:24px;font-weight:700;color:var(--muted)}
+nav a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;
+  border-radius:16px;border:0;font-weight:800;cursor:pointer}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#c45e3a);color:#fff;box-shadow:0 12px 26px rgba(198,92,54,.24)}
+.btn-light{background:#fff;border:1px solid var(--line)}
+.hero{min-height:720px;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:84px 0}
+.eyebrow{display:inline-block;padding:9px 13px;border-radius:999px;background:#fff1e3;color:#a45c38;font-weight:800;font-size:13px}
+h1{font-size:clamp(52px,6vw,82px);line-height:.98;letter-spacing:-.04em;margin:22px 0}
+.grad{display:block;background:linear-gradient(90deg,#d66e49,#f0b259);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:20px;line-height:1.7;color:var(--muted);max-width:650px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0 34px}
+.stats{display:flex;gap:32px;flex-wrap:wrap}.stat strong{display:block;font-size:24px}.stat span{font-size:13px;color:var(--muted)}
+.hero-card{background:#fff;border-radius:30px;box-shadow:var(--shadow);overflow:hidden;transform:rotate(1deg)}
+.hero-card-top{height:56px;background:#fff8f1;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800}
+.room{height:500px;position:relative;overflow:hidden;background:linear-gradient(#f8ead7 0 60%,#d8b287 60%)}
+.room:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 70px,rgba(95,62,43,.04) 70px 72px)}
+.pet{position:absolute;left:50%;bottom:130px;transform:translateX(-50%);font-size:120px;filter:drop-shadow(0 18px 15px rgba(75,46,31,.15));animation:bob 3.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateX(-50%) translateY(-8px)}}
+.bubble{position:absolute;left:50%;top:110px;transform:translateX(-50%);background:#fff;padding:13px 16px;border-radius:18px 18px 18px 6px;
+  box-shadow:0 10px 24px rgba(80,52,36,.09);font-size:13px;font-weight:700;white-space:nowrap}
+.care{position:absolute;left:50%;bottom:72px;transform:translateX(-50%);display:flex;gap:5px;padding:7px;background:rgba(255,250,243,.95);border-radius:16px}
+.care span{background:#fff0de;padding:9px 10px;border-radius:11px;font-size:11px;font-weight:800}
+.dock{position:absolute;left:50%;bottom:15px;transform:translateX(-50%);display:flex;gap:8px;padding:8px 10px;background:rgba(255,255,255,.85);border-radius:16px}
+.dock span{width:34px;height:34px;display:grid;place-items:center;background:#fff7ed;border-radius:10px}
+section{padding:92px 0}.soft{background:linear-gradient(180deg,rgba(246,237,228,.72),rgba(251,247,241,.2))}
+.title{text-align:center;max-width:760px;margin:0 auto 46px}.title h2{font-size:clamp(36px,5vw,56px);margin:16px 0 12px;letter-spacing:-.03em}.title p{color:var(--muted);font-size:18px;line-height:1.65}
+.pets{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pet-card{position:relative;background:rgba(255,255,255,.88);border:1px solid #f0dfd0;border-radius:26px;padding:26px;box-shadow:0 14px 40px rgba(84,57,42,.06);transition:.2s}
+.pet-card:hover{transform:translateY(-6px);box-shadow:0 20px 46px rgba(84,57,42,.10)}
+.price{position:absolute;right:18px;top:18px;padding:7px 10px;border-radius:999px;background:#f7e8da;color:#955d42;font-size:12px;font-weight:900}
+.price.free{background:#e8f4dd;color:#60854a}
+.avatar{width:92px;height:92px;border-radius:26px;background:linear-gradient(145deg,#fff6e9,#f4decb);display:grid;place-items:center;font-size:54px;margin-bottom:18px}
+.pet-card h3{font-size:25px;margin:0 0 4px}.role{color:#ae6745;font-weight:800}.pet-card p{color:var(--muted);line-height:1.58}
+.special{background:#fbf3eb;padding:11px 13px;border-radius:14px;font-size:13px;margin:16px 0}
+.small-btn{width:100%;height:43px;border:0;border-radius:13px;background:#47342c;color:#fff;font-weight:800;cursor:pointer}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.feature{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:24px;padding:24px}
+.icon{width:52px;height:52px;border-radius:16px;background:#fff0de;display:grid;place-items:center;font-size:25px;margin-bottom:15px}
+.feature h3{margin:0 0 8px}.feature p{color:var(--muted);line-height:1.6}
+.download{border-radius:34px;padding:50px;background:linear-gradient(135deg,#9f563a,#d7774e 58%,#efb45d);color:#fff;box-shadow:0 26px 70px rgba(159,86,58,.22)}
+.download h2{font-size:clamp(36px,5vw,56px);margin:12px 0}.download p{max-width:720px;color:rgba(255,255,255,.86);line-height:1.65}
+.download .btn{background:#fff;color:#934d34;margin-top:12px}
+.faq{max-width:900px;margin:auto}.faq details{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:10px 0}
+.faq summary{cursor:pointer;font-weight:800}.faq p{color:var(--muted);line-height:1.6}
+footer{padding:44px 0 56px;border-top:1px solid var(--line);text-align:center;color:var(--muted)}
+.modal-bg{position:fixed;inset:0;background:rgba(50,33,25,.45);backdrop-filter:blur(10px);display:none;place-items:center;padding:20px;z-index:100}
+.modal-bg.open{display:grid}.modal{width:min(500px,100%);background:#fffaf5;border-radius:28px;padding:30px;text-align:center;box-shadow:var(--shadow);position:relative}
+.modal .x{position:absolute;right:14px;top:14px;width:38px;height:38px;border-radius:50%;border:0;background:#f4e8dd;font-size:22px;cursor:pointer}
+.modal .big{font-size:72px}.modal h3{font-size:30px;margin:8px 0}.modal p{color:var(--muted);line-height:1.6}
+.menu{display:none}
+@media(max-width:960px){
+  nav{display:none;position:absolute;left:14px;right:14px;top:80px;background:#fff;padding:18px;border-radius:18px;box-shadow:var(--shadow);flex-direction:column}
+  nav.open{display:flex}.menu{display:block;border:0;background:#f6ece3;width:42px;height:42px;border-radius:13px;font-size:19px}
+  header>.btn{display:none}.hero{grid-template-columns:1fr;text-align:center}.lead{margin:auto}.actions,.stats{justify-content:center}
+  .pets,.features{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:620px){
+  header{height:62px}.logo{font-size:20px}.logo-badge{width:36px;height:36px}
+  .hero{padding-top:58px}.hero h1{font-size:48px}.lead{font-size:17px}.actions{flex-direction:column}.btn{width:100%}
+  .room{height:420px}.pet{font-size:92px;bottom:120px}.bubble{top:88px;font-size:12px}
+  .care{width:calc(100% - 22px);bottom:62px}.care span{flex:1;padding:8px 5px}
+  .dock span{width:30px;height:30px}.pets,.features{grid-template-columns:1fr}.download{padding:32px 22px}
+}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="#home"><span class="logo-badge">G</span><span>Girlandia</span></a>
+  <nav id="nav">
+    <a href="#pets">Питомцы</a><a href="#features">Возможности</a><a href="#download">Скачать</a><a href="#faq">FAQ</a>
+  </nav>
+  <a class="btn btn-primary" href="#download">Скачать</a>
+  <button class="menu" id="menu">☰</button>
+</header>
+
+<main>
+  <div class="wrap hero" id="home">
+    <div>
+      <span class="eyebrow">💛 Твой маленький мир на рабочем столе</span>
+      <h1>Питомец, который <span class="grad">живёт рядом с тобой.</span></h1>
+      <p class="lead">Girlandia — уютное приложение с живыми питомцами: они гуляют по экрану, разговаривают, играют, спят, растут и становятся по-настоящему разными.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#download">Скачать бесплатно ↓</a>
+        <a class="btn btn-light" href="#pets">Познакомиться с питомцами</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>6</strong><span>уникальных питомцев</span></div>
+        <div class="stat"><strong>25+</strong><span>уровней малыша</span></div>
+        <div class="stat"><strong>∞</strong><span>милых моментов</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-top">Домик Милы</div>
+      <div class="room">
+        <div class="bubble">Можно сегодня просто побыть рядом? 💛</div>
+        <div class="pet">🦫</div>
+        <div class="care"><span>🎾 Играть</span><span>🍎 Кормить</span><span>💬 Говорить</span><span>💤 Спать</span></div>
+        <div class="dock"><span>🛍️</span><span>🎒</span><span>🎮</span><span>🧠</span><span>🐾</span><span>⚙️</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="soft" id="pets">
+    <div class="wrap">
+      <div class="title">
+        <span class="eyebrow">🐾 Найди своего любимца</span>
+        <h2>Шесть питомцев. Шесть характеров.</h2>
+        <p>Каждый питомец отличается не только внешностью, но и характером, мини-играми, репликами и личной системой прогресса.</p>
+      </div>
+
+      <div class="pets">
+        <article class="pet-card"><span class="price free">Бесплатно</span><div class="avatar">🦫</div><h3>Мила</h3><div class="role">Уютная капибара</div><p>Спокойная, добрая и немного ленивая. Любит пледы, разговоры и просто быть рядом.</p><div class="special">💛 Уникальная система: <b>Уют</b></div><button class="small-btn" data-pet="Мила">Подробнее</button></article>
+        <article class="pet-card"><span class="price">€2.49</span><div class="avatar">🦔</div><h3>Ёжик</h3><div class="role">Маленький исследователь</div><p>Стеснительный коллекционер, который приносит листики, грибочки и редкие находки.</p><div class="special">🍂 Уникальная система: <b>Коллекция</b></div><button class="small-btn" data-pet="Ёжик">Подробнее</button></article>
+        <article class="pet-card"><span class="price">€2.49</span><div class="avatar">🍪</div><h3>Печенька</h3><div class="role">Весёлый сладкоежка</div><p>Открывает рецепты, готовит лакомства и превращает обычный вечер в мини-кухню.</p><div class="special">📖 Уникальная система: <b>Книга рецептов</b></div><button class="small-btn" data-pet="Печенька">Подробнее</button></article>
+        <article class="pet-card"><span class="price">€2.99</span><div class="avatar">🌵</div><h3>Кактус</h3><div class="role">Спокойный садовник</div><p>Выращивает растения, любит солнце и иногда выдаёт подозрительно мудрые фразы.</p><div class="special">🌱 Уникальная система: <b>Сад</b></div><button class="small-btn" data-pet="Кактус">Подробнее</button></article>
+        <article class="pet-card"><span class="price">€3.49</span><div class="avatar">🪿</div><h3>Гусь</h3><div class="role">Специалист по хаосу</div><p>Прячет игрушки, устраивает проделки и уверен, что все ложки принадлежат ему.</p><div class="special">😈 Уникальная система: <b>Книга проделок</b></div><button class="small-btn" data-pet="Гусь">Подробнее</button></article>
+        <article class="pet-card"><span class="price">€3.49</span><div class="avatar">🐶</div><h3>Мальтипу</h3><div class="role">Энергичная ученица</div><p>Учит команды, выполняет трюки и радуется мячику сильнее, чем кто-либо.</p><div class="special">⭐ Уникальная система: <b>Школа трюков</b></div><button class="small-btn" data-pet="Мальтипу">Подробнее</button></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="title"><span class="eyebrow">✨ Не просто картинка</span><h2>Питомец реагирует на тебя каждый день.</h2></div>
+      <div class="features">
+        <div class="feature"><div class="icon">💬</div><h3>Общение</h3><p>Разговоры, реакции и новые реплики по мере дружбы.</p></div>
+        <div class="feature"><div class="icon">🧠</div><h3>Память</h3><p>Питомец запоминает важные факты и делает общение личнее.</p></div>
+        <div class="feature"><div class="icon">🎮</div><h3>Мини-игры</h3><p>Сад, кухня, трюки, поиск сокровищ и проделки.</p></div>
+        <div class="feature"><div class="icon">🏠</div><h3>Домик</h3><p>Кормление, сон, рюкзак, магазин, музыка и отдых.</p></div>
+        <div class="feature"><div class="icon">🎁</div><h3>Уровни</h3><p>Подарки, предметы, новые анимации и события.</p></div>
+        <div class="feature"><div class="icon">🐾</div><h3>Коллекция</h3><p>Собирай питомцев и открывай совместные сцены.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="download">
+    <div class="wrap">
+      <div class="download">
+        <span class="eyebrow">💛 Начни бесплатно</span>
+        <h2>Посели маленького друга на своём рабочем столе.</h2>
+        <p>Первая версия Girlandia создаётся для Windows. Мила будет бесплатным питомцем, а остальные откроют свои уникальные функции и мини-игры.</p>
+        <a href="#" class="btn" id="downloadBtn">Скачать Girlandia для Windows</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap faq">
+      <div class="title"><span class="eyebrow">❓ FAQ</span><h2>Частые вопросы</h2></div>
+      <details><summary>Girlandia бесплатная?</summary><p>Да. Мила будет доступна бесплатно. Остальные питомцы можно будет приобрести отдельно.</p></details>
+      <details><summary>У питомцев разные функции?</summary><p>Да. У каждого свой характер, уникальная механика, мини-игра и реплики.</p></details>
+      <details><summary>Будет версия для телефона?</summary><p>Сначала проект сосредоточен на Windows. Мобильная версия может появиться позже.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><div class="logo" style="justify-content:center"><span class="logo-badge">G</span><span>Girlandia</span></div><p>Маленький мир питомцев, который всегда рядом.</p><small>© <span id="year"></span> Girlandia</small></div></footer>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <button class="x" id="closeModal">×</button>
+    <div class="big" id="modalIcon">🦫</div>
+    <h3 id="modalName">Мила</h3>
+    <p id="modalText"></p>
+    <div class="special" id="modalSpecial"></div>
+    <button class="btn btn-primary" id="okModal">Понятно 💛</button>
+  </div>
+</div>
+
+<script>
+const data={
+"Мила":["🦫","Спокойная капибара, которая любит уют, разговоры и быть рядом.","💛 Уют · мини-игра «Тихий вечер»"],
+"Ёжик":["🦔","Застенчивый исследователь и коллекционер редких находок.","🍂 Коллекция · мини-игра «Лесные сокровища»"],
+"Печенька":["🍪","Весёлый сладкоежка, который открывает рецепты и готовит десерты.","📖 Книга рецептов · мини-игра «Кухня Печеньки»"],
+"Кактус":["🌵","Тихий садовник и маленький философ с собственным растущим садом.","🌱 Сад · мини-игра «Маленький сад»"],
+"Гусь":["🪿","Безобидный создатель хаоса, который устраивает проделки и сюрпризы.","😈 Книга проделок · мини-игра «Поймай Гуся»"],
+"Мальтипу":["🐶","Энергичная ученица, которая запоминает команды и учит новые трюки.","⭐ Школа трюков · мини-игра «Тренировка»"]
+};
+const bg=document.getElementById("modalBg"),nameEl=document.getElementById("modalName"),iconEl=document.getElementById("modalIcon"),
+textEl=document.getElementById("modalText"),specialEl=document.getElementById("modalSpecial");
+document.querySelectorAll("[data-pet]").forEach(b=>b.onclick=()=>{
+  const p=data[b.dataset.pet]; iconEl.textContent=p[0]; nameEl.textContent=b.dataset.pet; textEl.textContent=p[1]; specialEl.textContent=p[2]; bg.classList.add("open")
+});
+function closeM(){bg.classList.remove("open")}
+document.getElementById("closeModal").onclick=closeM;document.getElementById("okModal").onclick=closeM;
+bg.onclick=e=>{if(e.target===bg)closeM()};
+document.getElementById("menu").onclick=()=>document.getElementById("nav").classList.toggle("open");
+document.querySelectorAll("nav a").forEach(a=>a.onclick=()=>document.getElementById("nav").classList.remove("open"));
+document.getElementById("downloadBtn").onclick=e=>{e.preventDefault();alert("Здесь позже будет ссылка на GitHub Release с Girlandia.")};
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
